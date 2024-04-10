@@ -1,17 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Read the CSV file
-file_path = r'C:\Users\marte\PycharmProjects\helloworld\pythonProject\koik_mangud\mangude_ajalugu.csv'  # Replace this with your CSV file path
+
+file_path = r'C:\Users\marte\PycharmProjects\helloworld\pythonProject\koik_mangud\mangude_ajalugu.csv'
 data = pd.read_csv(file_path)
 
-# Function to analyze team's performance in a specific year
+
 def analyze_team_performance(year, team):
-    # Filter data for the specified year and team
+
     filtered_data_home = data[(data['aasta'] == year) & (data['kodu'] == team)]
     filtered_data_away = data[(data['aasta'] == year) & (data['võõras'] == team)]
 
-    # Counting games won, lost, and tied
+
     games_won_home = filtered_data_home[filtered_data_home['koduväravad'] > filtered_data_home['võõraväravad']]
     games_won_away = filtered_data_away[filtered_data_away['võõraväravad'] > filtered_data_away['koduväravad']]
     games_won_total = len(games_won_home) + len(games_won_away)
@@ -24,21 +24,21 @@ def analyze_team_performance(year, team):
     games_tied_away = filtered_data_away[filtered_data_away['koduväravad'] == filtered_data_away['võõraväravad']]
     games_tied_total = len(games_tied_home) + len(games_tied_away)
 
-    # Plotting the bar chart with rounded counts
+
     plt.figure(figsize=(8, 6))
-    bars = plt.bar(['Võite', 'Kaotusi', 'Viike'], [games_won_total, games_lost_total, games_tied_total], color=['green', 'red', 'orange'])
+    bars = plt.bar(['Võite', 'Kaotusi', 'Viike'], [games_won_total, games_lost_total, games_tied_total], color=['green', 'red', 'blue'])
     plt.title(f'{team} tulemused aastal {year}')
     plt.xlabel('')
     plt.ylabel('Mängude arv')
 
-    # Adding rounded text labels on top of each bar
+
     for bar in bars:
         yval = bar.get_height()
         plt.text(bar.get_x() + bar.get_width()/2, yval, round(yval), va='bottom', ha='center', fontsize=10)
 
     plt.show()
 
-# Example usage
+
 year_input = int(input("Sisestage aasta(2018-2023): "))
 team_input = input("Sisestage tiimi nimi: ")
 
